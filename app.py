@@ -41,11 +41,11 @@ def start():
     game = Game(int(size), mode, difficulty)
     games[gameNumber] = game
     session['game'] = gameNumber
+    gameNumber += 1
     if mode == 'multiplayer':
         session['player'] = 0
         game.full = False
         return redirect(url_for('wait', mode=mode, size=size, difficulty=difficulty))
-    gameNumber += 1
     return render_template('start.html', mode=mode, size=size, difficulty=difficulty, game=game)
 
 
