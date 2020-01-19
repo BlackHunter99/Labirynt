@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% if game.full == False %}
+        <meta http-equiv="refresh" content="2" >
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <a href="{{ url_for('multiplayer') }}">Powrót</a>
+    <p>Tryb multiplayer</p>
+    {% if size == '10' %}
+        <p>10x10</p>
+    {% elif size == '20' %}
+        <p>20x20</p>
+    {% elif size == '30' %}
+        <p>30x30</p>
+    {% elif size == '40' %}
+        <p>40x40</p>
+    {% endif %}
+    {% if difficulty == 'easy' %}
+        <p>Łatwy</p>
+    {% elif difficulty == 'medium' %}
+        <p>Średni</p>
+    {% elif difficulty == 'hard' %}
+        <p>Trudny</p>
+    {% endif %}
+    {% if game.full == False %}
+        <h2>Oczekiwanie na przeciwnika</h2>
+    {% else %}
+        <h2>Znaleziono przeciwnika</h2>
+        <h3><a href="{{ url_for('game') }}">Start</a></h3>
+    {% endif %}
+{% endblock %}

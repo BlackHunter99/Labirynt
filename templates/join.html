@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% if game.begin == False %}
+        <meta http-equiv="refresh" content="2" >
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <a href="{{ url_for('multiplayer') }}">Powrót</a>
+    {% if mode == 'hotseat' %}
+        <p>Tryb Hotseat</p>
+    {% elif mode == 'ai' %}
+        <p>Tryb vs komputer</p>
+    {% elif mode == 'multiplayer' %}
+        <p>Tryb multiplayer</p>
+    {% endif %}
+    {% if size == 10 %}
+        <p>10x10</p>
+    {% elif size == 20 %}
+        <p>20x20</p>
+    {% elif size == 30 %}
+        <p>30x30</p>
+    {% elif size == 40 %}
+        <p>40x40</p>
+    {% endif %}
+    {% if difficulty == 'easy' %}
+        <p>Łatwy</p>
+    {% elif difficulty == 'medium' %}
+        <p>Średni</p>
+    {% elif difficulty == 'hard' %}
+        <p>Trudny</p>
+    {% endif %}
+    <h2>Oczekiwanie na rozpoczęcie</h2>
+{% endblock %}

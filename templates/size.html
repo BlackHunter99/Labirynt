@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+    <a href="{{ url_for('mode', mode=mode) }}">Powrót</a>
+    {% if mode == 'hotseat' %}
+        <p>Tryb Hotseat</p>
+    {% elif mode == 'ai' %}
+        <p>Tryb vs komputer</p>
+    {% elif mode == 'multiplayer' %}
+        <p>Tryb multiplayer</p>
+    {% endif %}
+    <p>Wybierz rozmiar labiryntu</p>
+    <a href="{{ url_for('difficulty', size=10, mode=mode) }}">10x10</a>
+    <a href="{{ url_for('difficulty', size=20, mode=mode) }}">20x20</a>
+    <a href="{{ url_for('difficulty', size=30, mode=mode) }}">30x30</a>
+    <a href="{{ url_for('difficulty', size=40, mode=mode) }}">40x40</a>
+{% endblock %}

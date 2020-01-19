@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+    {% if wait == True %}
+        <meta http-equiv="refresh" content="2" >
+    {% endif %}
+
+{% endblock %}
+
+{% block body %}
+    {% if wait == True %}
+        <p><a href="{{ url_for('mode') }}">Wyjdź z gry</a></p>
+        <h1>Tura przeciwnika</h1>
+    {% else %}
+        <div class="board">
+            <div class="legend">
+                <p><a href="{{ url_for('mode') }}">Wyjdź z gry</a></p><br>
+                <h3>LEGENDA</h3>
+                <p>G - gracz</p>
+                <p>Q - wyjście z labiryntu (fioletowe)</p>
+                <p>I - przedmiot</p>
+                <p>K - klucz</p><br>
+                <p>Kolory pól:</p>
+                <p>czarne - niewidoczne</p>
+                <p>szare - odwiedzone</p>
+                <p>białe - widoczne sąsiednie</p>
+                <p>turkusowe - podświetlenie przy wyborze</p>
+                <p>zielone - gracz 1</p>
+                <p>czerowne - gracz 2</p>
+                <p>żółte - pole z dwoma graczami</p><br>
+                <p>Kolory ścian:</p>
+                <p>niebieskie - ściana niemożliwa do wspinania</p>
+                <p>brązowe - ściana możliwa do wspinania</p>
+                <p>pomarańczowe - drzwi otwierane kluczem</p>
+            </div>
+            <div class="equipment">
+                <br><br><br><br><br>
+                <h2>TURA GRACZA NR: {{ playerNumber }}</h2>
+                <h3>EKWIPUNEK</h3>
+                <p>WYTRZYMAŁOŚĆ:<b> {{ game.player.stamina }}</b></p>
+                <p><b><a href="{{ url_for('game', item = 'bottle') }}">butelki z wodą:</a> {{ game.player.bottle }}</b> (+{{ game.player.maxStamina }} wytrzymałości)</p>
+                <p><b><a href="{{ url_for('game', item = 'rope') }}">lina z kotwiczką:</a> {{ game.player.rope }}</b> (-30 wytrzymałości)</p>
+                <p><b><a href="{{ url_for('game', item = 'trap') }}">pułapka:</a> {{ game.player.trap }}</b> (-20 wytrzymałości)</p>
+                <p><b><a href="{{ url_for('game', item = 'sonar') }}">sonar:</a> {{ game.player.sonar }}</b> (-30 wytrzymałości)</p>
+                <p><b><a href="{{ url_for('game', item = 'key') }}">klucz:</a> {{ game.player.key }}</b></p>
+                <p><b><a href="{{ url_for('game', action = 'meditate') }}">MEDYTACJA</a></b> (+{{ game.player.maxStamina }} wytrzymałości)</p>
+                <p><b><a href="{{ url_for('game', endTurn = 1) }}">ZAKOŃCZ TURĘ</a></b> (+{{ 4 * game.maze.size }} wytrzymałości)</p>
+                <br>
+                <h2>{{ game.info }}</h2>
+                <h2>{{ game.collectible }}</h2>
+            </div>
+            <div class="maze{% if game.difficulty != 'easy' %} mazeBlack{% endif %}{% if game.maze.size==40 %} maze40{%
+                    elif game.maze.size==30 %} maze30{% elif game.maze.size==20 %} maze20{% elif game.maze.size==10 %} maze10{% endif %}">
+            {% for x in range(game.maze.size) %}
+                {% for y in range(game.maze.size) %}
+                    {% if game.difficulty == 'easy' %}
+                        <div class="cell{% if game.player.stamina > 0%} cellWithStamina{% endif %}{% if game.maze.cells[x][y] in doorArea and game.maze.cells[x][y] not in area %} doorArea{%
+                                elif game.maze.cells[x][y] in ropeArea and game.maze.cells[x][y] not in area %} ropeArea{% else %}{% if game.maze.cells[x][y] in area %}{%
+                                if game.maze.cells[x][y].content=='available' %} available{% elif game.maze.cells[x][y].content=='item' %} item{%
+                                elif game.maze.cells[x][y].content=='key' %} key{% elif game.maze.cells[x][y].content=='end' %} end{%
+                                elif game.maze.cells[x][y].content=='playerOne' %} playerOne{% elif game.maze.cells[x][y].content=='playerTwo' %} playerTwo{%
+                                elif game.maze.cells[x][y].content=='twoPlayers' %} twoPlayers{% endif %}{% endif %}{%
+                                if game.maze.cells[x][y].walls['top']=='none' %} top-none{% elif game.maze.cells[x][y].walls['top']=='notClimb' %} top-notClimb{%
+                                elif game.maze.cells[x][y].walls['top']=='climb' %} top-climb{% elif game.maze.cells[x][y].walls['top']=='door' %} top-door{% endif %}{%
+                                if game.maze.cells[x][y].walls['right']=='none' %} right-none{% elif game.maze.cells[x][y].walls['right']=='notClimb' %} right-notClimb{%
+                                elif game.maze.cells[x][y].walls['right']=='climb' %} right-climb{% elif game.maze.cells[x][y].walls['right']=='door' %} right-door{% endif %}{%
+                                if game.maze.cells[x][y].walls['bottom']=='none' %} bottom-none{% elif game.maze.cells[x][y].walls['bottom']=='notClimb' %} bottom-notClimb{%
+                                elif game.maze.cells[x][y].walls['bottom']=='climb' %} bottom-climb{% elif game.maze.cells[x][y].walls['bottom']=='door' %} bottom-door{% endif %}{%
+                                if game.maze.cells[x][y].walls['left']=='none' %} left-none{% elif game.maze.cells[x][y].walls['left']=='notClimb' %} left-notClimb{%
+                                elif game.maze.cells[x][y].walls['left']=='climb' %} left-climb{% elif game.maze.cells[x][y].walls['left']=='door' %} left-door{% endif %}{% endif %}">
+                            <a href="{{ url_for('game', x=x, y=y) }}">{%
+                                    if game.maze.cells[x][y].content=='end' and game.maze.cells[x][y] in area %}Q{%
+                                            elif game.maze.cells[x][y].content=='item' and game.maze.cells[x][y] in area %}I{%
+                                            elif game.maze.cells[x][y].content=='key' and game.maze.cells[x][y] in area %}K{%
+                                            elif (game.maze.cells[x][y].content=='playerOne' or game.maze.cells[x][y].content=='playerTwo' or game.maze.cells[x][y].content=='twoPlayers') and game.maze.cells[x][y] in area %}G{%
+                                            else %} {%
+                                            endif %}</a>
+                        </div>
+                    {% else %}
+                        <div class="cell{% if game.player.stamina > 0%} cellWithStamina{% endif %}{%
+                                if game.maze.cells[x][y] not in area and game.maze.cells[x][y] not in doorArea and game.maze.cells[x][y] not in ropeArea and game.maze.cells[x][y] not in visited %} hidden{%
+                                elif game.maze.cells[x][y] in doorArea and game.maze.cells[x][y] not in area %} doorArea{% elif game.maze.cells[x][y] in ropeArea and game.maze.cells[x][y] not in area %} ropeArea{%
+                                else %}{% if game.maze.cells[x][y] in visited and game.maze.cells[x][y] not in area and  game.maze.cells[x][y] not in doorArea and game.maze.cells[x][y] not in ropeArea %} visited{%
+                                elif game.maze.cells[x][y].content=='available' %} available{% elif game.maze.cells[x][y].content=='item' %} item{% elif game.maze.cells[x][y].content=='key' %} key{%
+                                elif game.maze.cells[x][y].content=='end' %} end{% elif game.maze.cells[x][y].content=='playerOne' %} playerOne{% elif game.maze.cells[x][y].content=='playerTwo' %} playerTwo{%
+                                elif game.maze.cells[x][y].content=='twoPlayers' %} twoPlayers{% endif %}{%
+                                if game.maze.cells[x][y] in visited and game.maze.cells[x][y] not in area and game.maze.cells[x][y] not in doorArea and game.maze.cells[x][y] not in ropeArea and game.maze.cells[x][y].walls['top']=='none' %} top-visited{%
+                                elif game.maze.cells[x][y].walls['top']=='none' %} top-none{% elif game.maze.cells[x][y].walls['top']=='notClimb' %} top-notClimb{%
+                                elif game.maze.cells[x][y].walls['top']=='climb' %} top-climb{% elif game.maze.cells[x][y].walls['top']=='door' %} top-door{% endif %}{%
+                                if game.maze.cells[x][y] in visited and game.maze.cells[x][y] not in area and game.maze.cells[x][y] not in doorArea and game.maze.cells[x][y] not in ropeArea and game.maze.cells[x][y].walls['right']=='none' %} right-visited{%
+                                elif game.maze.cells[x][y].walls['right']=='none' %} right-none{% elif game.maze.cells[x][y].walls['right']=='notClimb' %} right-notClimb{%
+                                elif game.maze.cells[x][y].walls['right']=='climb' %} right-climb{% elif game.maze.cells[x][y].walls['right']=='door' %} right-door{% endif %}{%
+                                if game.maze.cells[x][y] in visited and game.maze.cells[x][y] not in area and game.maze.cells[x][y] not in doorArea and game.maze.cells[x][y] not in ropeArea and game.maze.cells[x][y].walls['bottom']=='none' %} bottom-visited{%
+                                elif game.maze.cells[x][y].walls['bottom']=='none' %} bottom-none{% elif game.maze.cells[x][y].walls['bottom']=='notClimb' %} bottom-notClimb{%
+                                elif game.maze.cells[x][y].walls['bottom']=='climb' %} bottom-climb{% elif game.maze.cells[x][y].walls['bottom']=='door' %} bottom-door{% endif %}{%
+                                if game.maze.cells[x][y] in visited and game.maze.cells[x][y] not in area and game.maze.cells[x][y] not in doorArea and game.maze.cells[x][y] not in ropeArea and game.maze.cells[x][y].walls['left']=='none' %} left-visited{%
+                                elif game.maze.cells[x][y].walls['left']=='none' %} left-none{% elif game.maze.cells[x][y].walls['left']=='notClimb' %} left-notClimb{%
+                                elif game.maze.cells[x][y].walls['left']=='climb' %} left-climb{% elif game.maze.cells[x][y].walls['left']=='door' %} left-door{% endif %}{% endif %}">
+                            <a href="{{ url_for('game', x=x, y=y) }}">{%
+                                    if game.maze.cells[x][y].content=='end' and game.maze.cells[x][y] in area %}Q{%
+                                            elif game.maze.cells[x][y].content=='item' and game.maze.cells[x][y] in area %}I{%
+                                            elif game.maze.cells[x][y].content=='key' and game.maze.cells[x][y] in area %}K{%
+                                            elif (game.maze.cells[x][y].content=='playerOne' or game.maze.cells[x][y].content=='playerTwo' or game.maze.cells[x][y].content=='twoPlayers') and game.maze.cells[x][y] in area %}G{%
+                                            else %} {%
+                                            endif %}</a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <br>
+            {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

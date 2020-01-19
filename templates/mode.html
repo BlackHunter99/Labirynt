@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+    <p>Tryby gry</p>
+    <a href="{{ url_for('size', mode='ai') }}">vs komputer</a>
+    <a href="{{ url_for('size', mode='hotseat') }}">hotseat</a>
+    <a href="{{ url_for('multiplayer') }}">multiplayer</a>
+{% endblock %}
