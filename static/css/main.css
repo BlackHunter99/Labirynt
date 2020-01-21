@@ -121,11 +121,11 @@ a {
     background-color: black;
 }
 
-.playerOne {
+.currentPlayer {
     background-color: green;
 }
 
-.playerTwo {
+.enemy {
     background-color: red;
 }
 

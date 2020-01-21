@@ -7,6 +7,8 @@ class Cell:
         self.walls = {'top': 'climb', 'right': 'climb', 'bottom': 'climb', 'left': 'climb'}
         self.visited = False
         # zawartość: available(white), visited(gray), hidden(black),
-        # playerOne(green, G), playerTwo(red, G), twoPlayers(yellow, G), item(I), key(K), end(Q)
+        # item(I), key(K), end(Q)
         self.content = 'available'
         self.trap = False
+        # currentPlayer(green, G), enemy(red, G), twoPlayers(yellow, G),
+        self.numberOfPlayers = 0

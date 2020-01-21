@@ -3,17 +3,21 @@ from player import *
 
 class Game:
     "Klasa gry"
-    def __init__(self, size, mode, difficulty, aiDifficulty = None):
+    def __init__(self, size, mode, difficulty, amountOfPlayers, aiDifficulty = None):
         self.mode = mode
         self.difficulty = difficulty
         self.aiDifficulty = aiDifficulty
         self.maze = Maze(size)
-        self.players = [Player(), Player()]
-        for player in self.players:
-            player.position = self.maze.start
-            player.maxStamina = int(size) * 10
-            player.stamina = int(size) * 10
-            player.visited.append(self.maze.start)
+        self.amountOfPlayers = amountOfPlayers
+        self.players = []
+        for i in range(self.amountOfPlayers):
+            self.players.append(Player())
+        for j in self.players:
+            j.position = self.maze.start
+            j.maxStamina = int(size) * 10
+            j.stamina = int(size) * 10
+            j.visited.append(self.maze.start)
+        self.maze.start.numberOfPlayers = self.amountOfPlayers
         self.key = False
         self.rope = False
         self.trap = False
@@ -25,6 +29,7 @@ class Game:
         self.info = 'Początek gry'
         self.collectible = ''
         self.winner = ''
+        self.playerCounter = 1
         self.full = True
         self.begin = False
         self.aiCounter = 0
@@ -98,20 +103,12 @@ class Game:
 
     def changeCellsContent(self, next):
         "Funkcja zmieniająca zawartości opuszczanego pola i docelowego pola"
-        if self.player.position.content == 'twoPlayers':
-            if self.player == self.players[0]:
-                self.player.position.content = 'playerTwo'
-            else:
-                self.player.position.content = 'playerOne'
-        else:
+        self.player.position.numberOfPlayers -= 1
+        if self.player.position.numberOfPlayers == 0:
             self.player.position.content = 'available'
 
-        if next.content == 'playerOne' or next.content == 'playerTwo':
-            next.content = 'twoPlayers'
-        elif self.player == self.players[0]:
-            next.content = 'playerOne'
-        else:
-            next.content = 'playerTwo'
+        next.numberOfPlayers += 1
+        next.content = 'player'
 
         self.player.visited.append(self.player.position)
         self.clearVar()

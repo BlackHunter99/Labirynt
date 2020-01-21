@@ -93,7 +93,7 @@ class Maze:
             for y in range(int(self.size / 2 - self.size / 10), int(self.size / 2 + self.size / 10)):
                 spawn.append(cells[x][y])
         self.start = random.choice(spawn)
-        self.start.content = 'twoPlayers'
+        self.start.content = 'player'
 
         "Losowe ustalenie lokacji kluczy"
         self.generateLocations(cells, 'available', 'key', self.size ** 2 / 50)

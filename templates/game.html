@@ -4,38 +4,37 @@
 
     {% if wait == True %}
         <meta http-equiv="refresh" content="2" >
-    {% endif %}
+    {% else %}
+        <script>
+        document.onkeydown = checkKeyDown;
 
-    <script>
-    document.onkeydown = checkKeyDown;
-
-    function checkKeyDown(k){
-        if (k.keyCode == "38") {
-            window.location.href = 'game?x={{ game.player.position.x - 1 }}&y={{ game.player.position.y }}';
-        }else if (k.keyCode == "39"){
-            window.location.href = 'game?x={{ game.player.position.x }}&y={{ game.player.position.y + 1 }}';
-        }else if (k.keyCode == "40"){
-            window.location.href = 'game?x={{ game.player.position.x + 1 }}&y={{ game.player.position.y }}';
-        }else if (k.keyCode == "37"){
-            window.location.href = 'game?x={{ game.player.position.x }}&y={{ game.player.position.y - 1 }}';
-        }else if (k.keyCode == "9"){
-            window.location.href = '{{ url_for('game', endTurn = 1) }}';
-        }else if (k.keyCode == "16"){
-            window.location.href = '{{ url_for('game', action = 'meditate') }}';
-        }else if (k.keyCode == "49"){
-            window.location.href = '{{ url_for('game', item = 'bottle') }}';
-        }else if (k.keyCode == "50"){
-            window.location.href = '{{ url_for('game', item = 'rope') }}';
-        }else if (k.keyCode == "51"){
-            window.location.href = '{{ url_for('game', item = 'trap') }}';
-        }else if (k.keyCode == "52"){
-            window.location.href = '{{ url_for('game', item = 'sonar') }}';
-        }else if (k.keyCode == "53") {
-            window.location.href = '{{ url_for('game', item = 'key') }}';
+        function checkKeyDown(k){
+            if (k.keyCode == "38") {
+                window.location.href = 'game?x={{ game.player.position.x - 1 }}&y={{ game.player.position.y }}';
+            }else if (k.keyCode == "39"){
+                window.location.href = 'game?x={{ game.player.position.x }}&y={{ game.player.position.y + 1 }}';
+            }else if (k.keyCode == "40"){
+                window.location.href = 'game?x={{ game.player.position.x + 1 }}&y={{ game.player.position.y }}';
+            }else if (k.keyCode == "37"){
+                window.location.href = 'game?x={{ game.player.position.x }}&y={{ game.player.position.y - 1 }}';
+            }else if (k.keyCode == "9"){
+                window.location.href = '{{ url_for('game', endTurn = 1) }}';
+            }else if (k.keyCode == "68"){
+                window.location.href = '{{ url_for('game', action = 'meditate') }}';
+            }else if (k.keyCode == "81"){
+                window.location.href = '{{ url_for('game', item = 'bottle') }}';
+            }else if (k.keyCode == "87"){
+                window.location.href = '{{ url_for('game', item = 'rope') }}';
+            }else if (k.keyCode == "69"){
+                window.location.href = '{{ url_for('game', item = 'trap') }}';
+            }else if (k.keyCode == "65"){
+                window.location.href = '{{ url_for('game', item = 'sonar') }}';
+            }else if (k.keyCode == "83") {
+                window.location.href = '{{ url_for('game', item = 'key') }}';
+            }
         }
-    }
-
-    </script>
+        </script>
+    {% endif %}
 
 {% endblock %}
 
@@ -57,8 +56,8 @@
                 <p>szare - odwiedzone</p>
                 <p>białe - widoczne sąsiednie</p>
                 <p>turkusowe - podświetlenie przy wyborze</p>
-                <p>zielone - gracz 1</p>
-                <p>czerowne - gracz 2</p>
+                <p>zielone - obecny gracz</p>
+                <p>czerowne - przeciwnik</p>
                 <p>żółte - pole z dwoma graczami</p><br>
                 <p>Kolory ścian:</p>
                 <p>niebieskie - ściana niemożliwa do wspinania</p>
@@ -70,13 +69,13 @@
                 <h2>TURA GRACZA NR: {{ playerNumber }}</h2>
                 <h3>EKWIPUNEK</h3>
                 <p>WYTRZYMAŁOŚĆ:<b> {{ game.player.stamina }}</b></p>
-                <p><b><a href="{{ url_for('game', item = 'bottle') }}">butelki z wodą:</a> {{ game.player.bottle }}</b> (+{{ game.player.maxStamina }} wytrzymałości)</p>
-                <p><b><a href="{{ url_for('game', item = 'rope') }}">lina z kotwiczką:</a> {{ game.player.rope }}</b> (-30 wytrzymałości)</p>
-                <p><b><a href="{{ url_for('game', item = 'trap') }}">pułapka:</a> {{ game.player.trap }}</b> (-20 wytrzymałości)</p>
-                <p><b><a href="{{ url_for('game', item = 'sonar') }}">sonar:</a> {{ game.player.sonar }}</b> (-30 wytrzymałości)</p>
-                <p><b><a href="{{ url_for('game', item = 'key') }}">klucz:</a> {{ game.player.key }}</b></p>
-                <p><b><a href="{{ url_for('game', action = 'meditate') }}">MEDYTACJA</a></b> (+{{ game.player.maxStamina }} wytrzymałości)</p>
-                <p><b><a href="{{ url_for('game', endTurn = 1) }}">ZAKOŃCZ TURĘ</a></b> (+{{ 4 * game.maze.size }} wytrzymałości)</p>
+                <p><b>[Q] <a href="{{ url_for('game', item = 'bottle') }}">butelki z wodą:</a> {{ game.player.bottle }}</b> (+{{ game.player.maxStamina }} wytrzymałości)</p>
+                <p><b>[W] <a href="{{ url_for('game', item = 'rope') }}">lina z kotwiczką:</a> {{ game.player.rope }}</b> (-30 wytrzymałości)</p>
+                <p><b>[E] <a href="{{ url_for('game', item = 'trap') }}">pułapka:</a> {{ game.player.trap }}</b> (-20 wytrzymałości)</p>
+                <p><b>[A] <a href="{{ url_for('game', item = 'sonar') }}">sonar:</a> {{ game.player.sonar }}</b> (-30 wytrzymałości)</p>
+                <p><b>[S] <a href="{{ url_for('game', item = 'key') }}">klucz:</a> {{ game.player.key }}</b></p>
+                <p><b>[D] <a href="{{ url_for('game', action = 'meditate') }}">MEDYTACJA</a></b> (+{{ game.player.maxStamina }} wytrzymałości)</p>
+                <p><b>[TAB] <a href="{{ url_for('game', endTurn = 1) }}">ZAKOŃCZ TURĘ</a></b> (+{{ 4 * game.maze.size }} wytrzymałości)</p>
                 <br>
                 <h2>{{ game.info }}</h2>
                 <h2>{{ game.collectible }}</h2>
@@ -89,9 +88,8 @@
                         <div class="cell{% if game.player.stamina > 0%} cellWithStamina{% endif %}{% if game.maze.cells[x][y] in doorArea and game.maze.cells[x][y] not in area %} doorArea{%
                                 elif game.maze.cells[x][y] in ropeArea and game.maze.cells[x][y] not in area %} ropeArea{% else %}{% if game.maze.cells[x][y] in area %}{%
                                 if game.maze.cells[x][y].content=='available' %} available{% elif game.maze.cells[x][y].content=='item' %} item{%
-                                elif game.maze.cells[x][y].content=='key' %} key{% elif game.maze.cells[x][y].content=='end' %} end{%
-                                elif game.maze.cells[x][y].content=='playerOne' %} playerOne{% elif game.maze.cells[x][y].content=='playerTwo' %} playerTwo{%
-                                elif game.maze.cells[x][y].content=='twoPlayers' %} twoPlayers{% endif %}{% endif %}{%
+                                elif game.maze.cells[x][y].content=='key' %} key{% elif game.maze.cells[x][y].content=='end' %} end{% elif game.maze.cells[x][y] != game.player.position%} enemy{%
+                                elif game.maze.cells[x][y].numberOfPlayers > 1 %} twoPlayers{% else %} currentPlayer{% endif %}{% endif %}{%
                                 if game.maze.cells[x][y].walls['top']=='none' %} top-none{% elif game.maze.cells[x][y].walls['top']=='notClimb' %} top-notClimb{%
                                 elif game.maze.cells[x][y].walls['top']=='climb' %} top-climb{% elif game.maze.cells[x][y].walls['top']=='door' %} top-door{% endif %}{%
                                 if game.maze.cells[x][y].walls['right']=='none' %} right-none{% elif game.maze.cells[x][y].walls['right']=='notClimb' %} right-notClimb{%
@@ -104,7 +102,7 @@
                                     if game.maze.cells[x][y].content=='end' and game.maze.cells[x][y] in area %}Q{%
                                             elif game.maze.cells[x][y].content=='item' and game.maze.cells[x][y] in area %}I{%
                                             elif game.maze.cells[x][y].content=='key' and game.maze.cells[x][y] in area %}K{%
-                                            elif (game.maze.cells[x][y].content=='playerOne' or game.maze.cells[x][y].content=='playerTwo' or game.maze.cells[x][y].content=='twoPlayers') and game.maze.cells[x][y] in area %}G{%
+                                            elif (game.maze.cells[x][y].numberOfPlayers > 0) and game.maze.cells[x][y] in area %}G{%
                                             else %} {%
                                             endif %}</a>
                         </div>
@@ -114,8 +112,8 @@
                                 elif game.maze.cells[x][y] in doorArea and game.maze.cells[x][y] not in area %} doorArea{% elif game.maze.cells[x][y] in ropeArea and game.maze.cells[x][y] not in area %} ropeArea{%
                                 else %}{% if game.maze.cells[x][y] in visited and game.maze.cells[x][y] not in area and  game.maze.cells[x][y] not in doorArea and game.maze.cells[x][y] not in ropeArea %} visited{%
                                 elif game.maze.cells[x][y].content=='available' %} available{% elif game.maze.cells[x][y].content=='item' %} item{% elif game.maze.cells[x][y].content=='key' %} key{%
-                                elif game.maze.cells[x][y].content=='end' %} end{% elif game.maze.cells[x][y].content=='playerOne' %} playerOne{% elif game.maze.cells[x][y].content=='playerTwo' %} playerTwo{%
-                                elif game.maze.cells[x][y].content=='twoPlayers' %} twoPlayers{% endif %}{%
+                                elif game.maze.cells[x][y].content=='end' %} end{% elif game.maze.cells[x][y] != game.player.position %} enemy{% elif game.maze.cells[x][y].numberOfPlayers > 1 %} twoPlayers{%
+                                else %} currentPlayer{% endif %}{%
                                 if game.maze.cells[x][y] in visited and game.maze.cells[x][y] not in area and game.maze.cells[x][y] not in doorArea and game.maze.cells[x][y] not in ropeArea and game.maze.cells[x][y].walls['top']=='none' %} top-visited{%
                                 elif game.maze.cells[x][y].walls['top']=='none' %} top-none{% elif game.maze.cells[x][y].walls['top']=='notClimb' %} top-notClimb{%
                                 elif game.maze.cells[x][y].walls['top']=='climb' %} top-climb{% elif game.maze.cells[x][y].walls['top']=='door' %} top-door{% endif %}{%
@@ -132,7 +130,7 @@
                                     if game.maze.cells[x][y].content=='end' and game.maze.cells[x][y] in area %}Q{%
                                             elif game.maze.cells[x][y].content=='item' and game.maze.cells[x][y] in area %}I{%
                                             elif game.maze.cells[x][y].content=='key' and game.maze.cells[x][y] in area %}K{%
-                                            elif (game.maze.cells[x][y].content=='playerOne' or game.maze.cells[x][y].content=='playerTwo' or game.maze.cells[x][y].content=='twoPlayers') and game.maze.cells[x][y] in area %}G{%
+                                            elif (game.maze.cells[x][y].numberOfPlayers > 0) and game.maze.cells[x][y] in area %}G{%
                                             else %} {%
                                             endif %}</a>
                         </div>
