@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <p>Tryby gry</p>
-    <a href="{{ url_for('size', mode='ai') }}">vs komputer</a>
-    <a href="{{ url_for('size', mode='hotseat') }}">hotseat</a>
-    <a href="{{ url_for('multiplayer') }}">multiplayer</a>
+    <h4>Tryby gry</h4>
+    <h2><a href="{{ url_for('settings', mode='ai') }}">vs komputer</a></h2>
+    <h2><a href="{{ url_for('settings', mode='hotseat') }}">hotseat</a></h2>
+    <h2><a href="{{ url_for('multiplayer') }}">multiplayer</a></h2>
 {% endblock %}

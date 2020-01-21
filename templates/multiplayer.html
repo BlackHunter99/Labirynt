@@ -6,8 +6,8 @@
 
 {% block body %}
     <a href="{{ url_for('mode') }}">Powrót</a><br><br>
-    <a href="{{ url_for('size', mode='multiplayer') }}">Stwórz grę</a>
-    <p>Lista gier</p>
+    <h3><a href="{{ url_for('settings', mode='multiplayer') }}">Stwórz grę</a></h3>
+    <h4>Lista gier</h4>
     {% for game in games %}
         {% if games[game].mode == 'multiplayer' and games[game].full == False %}
             <p>Gra nr {{ game }} <a href="{{ url_for('join', gameNumber=game) }}">Dołącz do gry</a></p>

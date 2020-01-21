@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+    <a href="{{ url_for('mode', mode=mode) }}">Powrót</a>
+    {% if mode == 'hotseat' %}
+        <h2>Tryb Hotseat</h2>
+    {% elif mode == 'ai' %}
+        <h2>Tryb vs komputer</h2>
+    {% elif mode == 'multiplayer' %}
+        <h2>Tryb multiplayer</h2>
+    {% endif %}
+    <form action="{{ url_for('start', mode=mode) }}" method="post">
+        <h3>Wielkość planszy:</h3>
+        <select name="size">
+            <option value="10">10x10</option>
+            <option value="20">20x20</option>
+            <option value="30">30x30</option>
+            <option value="40">40x40</option>
+        </select>
+        <h3>Poziom trudności</h3>
+        <select name="difficulty">
+            <option value="easy">Łatwy</option>
+            <option value="medium">Średni</option>
+            <option value="hard">Trudny</option>
+        </select>
+        {% if mode == 'ai' %}
+            <h3>Trudność SI</h3>
+            <select name="aiDifficulty">
+                <option value="easy">Łatwe</option>
+                <option value="hard">Trudne</option>
+            </select>
+        {% endif %}
+        <br><br><br><br>
+        <input type="submit" value="Zatwierdź ustawienia">
+    </form>
+{% endblock %}

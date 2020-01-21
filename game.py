@@ -3,9 +3,10 @@ from player import *
 
 class Game:
     "Klasa gry"
-    def __init__(self, size, mode, difficulty):
+    def __init__(self, size, mode, difficulty, aiDifficulty = None):
         self.mode = mode
         self.difficulty = difficulty
+        self.aiDifficulty = aiDifficulty
         self.maze = Maze(size)
         self.players = [Player(), Player()]
         for player in self.players:
@@ -26,6 +27,8 @@ class Game:
         self.winner = ''
         self.full = True
         self.begin = False
+        self.aiCounter = 0
+        self.aiDirection = random.choice(['top', 'right', 'bottom', 'left'])
 
 
     def initItems(self, size):

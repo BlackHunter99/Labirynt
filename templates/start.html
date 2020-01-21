@@ -5,28 +5,32 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{{ url_for('difficulty', mode=mode, size=size, difficulty=difficulty) }}">Powrót</a>
+    <a href="{{ url_for('settings', mode=mode) }}">Powrót</a>
     {% if mode == 'hotseat' %}
-        <p>Tryb Hotseat</p>
+        <h3>Tryb Hotseat</h3>
     {% elif mode == 'ai' %}
-        <p>Tryb vs komputer</p>
+        <h3>Tryb vs komputer</h3>
     {% endif %}
     {% if size == '10' %}
-        <p>10x10</p>
+        <h4>10x10</h4>
     {% elif size == '20' %}
-        <p>20x20</p>
+        <h4>20x20</h4>
     {% elif size == '30' %}
-        <p>30x30</p>
+        <h4>30x30</h4>
     {% elif size == '40' %}
-        <p>40x40</p>
+        <h4>40x40</h4>
     {% endif %}
     {% if difficulty == 'easy' %}
-        <p>Łatwy</p>
+        <h4>Łatwy</h4>
     {% elif difficulty == 'medium' %}
-        <p>Średni</p>
+        <h4>Średni</h4>
     {% elif difficulty == 'hard' %}
-        <p>Trudny</p>
+        <h4>Trudny</h4>
     {% endif %}
-    <h2>Zacznij grę</h2>
-    <h3><a href="{{ url_for('game') }}">Start</a></h3>
+    {% if aiDifficulty == 'easy' %}
+        <h4>Łatwe AI</h4>
+    {% elif aiDifficulty == 'hard' %}
+        <h4>Trudne AI</h4>
+    {% endif %}
+    <h2><a href="{{ url_for('game') }}">Zacznij grę</a></h2>
 {% endblock %}
