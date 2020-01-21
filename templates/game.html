@@ -6,6 +6,37 @@
         <meta http-equiv="refresh" content="2" >
     {% endif %}
 
+    <script>
+    document.onkeydown = checkKeyDown;
+
+    function checkKeyDown(k){
+        if (k.keyCode == "38") {
+            window.location.href = 'game?x={{ game.player.position.x - 1 }}&y={{ game.player.position.y }}';
+        }else if (k.keyCode == "39"){
+            window.location.href = 'game?x={{ game.player.position.x }}&y={{ game.player.position.y + 1 }}';
+        }else if (k.keyCode == "40"){
+            window.location.href = 'game?x={{ game.player.position.x + 1 }}&y={{ game.player.position.y }}';
+        }else if (k.keyCode == "37"){
+            window.location.href = 'game?x={{ game.player.position.x }}&y={{ game.player.position.y - 1 }}';
+        }else if (k.keyCode == "9"){
+            window.location.href = '{{ url_for('game', endTurn = 1) }}';
+        }else if (k.keyCode == "16"){
+            window.location.href = '{{ url_for('game', action = 'meditate') }}';
+        }else if (k.keyCode == "49"){
+            window.location.href = '{{ url_for('game', item = 'bottle') }}';
+        }else if (k.keyCode == "50"){
+            window.location.href = '{{ url_for('game', item = 'rope') }}';
+        }else if (k.keyCode == "51"){
+            window.location.href = '{{ url_for('game', item = 'trap') }}';
+        }else if (k.keyCode == "52"){
+            window.location.href = '{{ url_for('game', item = 'sonar') }}';
+        }else if (k.keyCode == "53") {
+            window.location.href = '{{ url_for('game', item = 'key') }}';
+        }
+    }
+
+    </script>
+
 {% endblock %}
 
 {% block body %}

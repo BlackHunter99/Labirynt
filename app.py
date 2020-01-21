@@ -315,7 +315,7 @@ def game(x=None, y=None, item=None, action = None, endTurn=None):
 
             if currentGame.player.stamina == 4 * currentGame.maze.size and currentGame.player.bottle == 0 and currentGame.firstMove == True:
                 return game(action='meditate')
-            elif currentGame.player.stamina > 0:
+            elif currentGame.player.stamina > 90:
                 if currentGame.aiDifficulty == 'easy':
                     neighbours = []
                     if currentGame.player.position.x > 0 and currentGame.player.position.walls['top'] == 'none':
@@ -347,53 +347,37 @@ def game(x=None, y=None, item=None, action = None, endTurn=None):
                                     currentGame.aiDirection = 'left'
                                     currentGame.aiCounter -= 1
                                     move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y - 1]
-                                elif currentGame.player.position.walls['bottom'] == 'none':
+                                else:
                                     currentGame.aiDirection = 'bottom'
                                     currentGame.aiCounter -= 2
                                     move = currentGame.maze.cells[currentGame.player.position.x + 1][currentGame.player.position.y]
-                                elif currentGame.player.position.walls['right'] == 'none':
-                                    currentGame.aiDirection = 'right'
-                                    currentGame.aiCounter -= 3
-                                    move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y + 1]
                             elif currentGame.aiDirection == 'right':
                                 if currentGame.player.position.walls['top'] == 'none':
                                     currentGame.aiDirection = 'top'
                                     currentGame.aiCounter -= 1
                                     move = currentGame.maze.cells[currentGame.player.position.x - 1][currentGame.player.position.y]
-                                elif currentGame.player.position.walls['left'] == 'none':
+                                else:
                                     currentGame.aiDirection = 'left'
                                     currentGame.aiCounter -= 2
                                     move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y - 1]
-                                elif currentGame.player.position.walls['bottom'] == 'none':
-                                    currentGame.aiDirection = 'bottom'
-                                    currentGame.aiCounter -= 3
-                                    move = currentGame.maze.cells[currentGame.player.position.x + 1][currentGame.player.position.y]
                             elif currentGame.aiDirection == 'bottom':
                                 if currentGame.player.position.walls['right'] == 'none':
                                     currentGame.aiDirection = 'right'
                                     currentGame.aiCounter -= 1
                                     move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y + 1]
-                                elif currentGame.player.position.walls['top'] == 'none':
+                                else:
                                     currentGame.aiDirection = 'top'
                                     currentGame.aiCounter -= 2
                                     move = currentGame.maze.cells[currentGame.player.position.x - 1][currentGame.player.position.y]
-                                elif currentGame.player.position.walls['left'] == 'none':
-                                    currentGame.aiDirection = 'left'
-                                    currentGame.aiCounter -= 3
-                                    move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y - 1]
-                            elif currentGame.aiDirection == 'left':
+                            else:
                                 if currentGame.player.position.walls['bottom'] == 'none':
                                     currentGame.aiDirection = 'bottom'
                                     currentGame.aiCounter -= 1
                                     move = currentGame.maze.cells[currentGame.player.position.x + 1][currentGame.player.position.y]
-                                elif currentGame.player.position.walls['right'] == 'none':
+                                else:
                                     currentGame.aiDirection = 'right'
                                     currentGame.aiCounter -= 2
                                     move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y + 1]
-                                elif currentGame.player.position.walls['top'] == 'none':
-                                    currentGame.aiDirection = 'top'
-                                    currentGame.aiCounter -= 3
-                                    move = currentGame.maze.cells[currentGame.player.position.x - 1][currentGame.player.position.y]
                     else:
                         if currentGame.aiDirection == 'top':
                             if currentGame.player.position.walls['right'] == 'none':
@@ -407,7 +391,7 @@ def game(x=None, y=None, item=None, action = None, endTurn=None):
                                 currentGame.aiDirection = 'left'
                                 currentGame.aiCounter -= 1
                                 move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y - 1]
-                            elif currentGame.player.position.walls['bottom'] == 'none':
+                            else:
                                 currentGame.aiDirection = 'bottom'
                                 currentGame.aiCounter -= 2
                                 move = currentGame.maze.cells[currentGame.player.position.x + 1][currentGame.player.position.y]
@@ -423,7 +407,7 @@ def game(x=None, y=None, item=None, action = None, endTurn=None):
                                 currentGame.aiDirection = 'top'
                                 currentGame.aiCounter -= 1
                                 move = currentGame.maze.cells[currentGame.player.position.x - 1][currentGame.player.position.y]
-                            elif currentGame.player.position.walls['left'] == 'none':
+                            else:
                                 currentGame.aiDirection = 'left'
                                 currentGame.aiCounter -= 2
                                 move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y - 1]
@@ -439,11 +423,11 @@ def game(x=None, y=None, item=None, action = None, endTurn=None):
                                 currentGame.aiDirection = 'right'
                                 currentGame.aiCounter -= 1
                                 move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y + 1]
-                            elif currentGame.player.position.walls['top'] == 'none':
+                            else:
                                 currentGame.aiDirection = 'top'
                                 currentGame.aiCounter -= 2
                                 move = currentGame.maze.cells[currentGame.player.position.x - 1][currentGame.player.position.y]
-                        elif currentGame.aiDirection == 'left':
+                        else:
                             if currentGame.player.position.walls['top'] == 'none':
                                 currentGame.aiDirection = 'top'
                                 currentGame.aiCounter += 1
@@ -455,7 +439,7 @@ def game(x=None, y=None, item=None, action = None, endTurn=None):
                                 currentGame.aiDirection = 'bottom'
                                 currentGame.aiCounter -= 1
                                 move = currentGame.maze.cells[currentGame.player.position.x + 1][currentGame.player.position.y]
-                            elif currentGame.player.position.walls['right'] == 'none':
+                            else:
                                 currentGame.aiDirection = 'right'
                                 currentGame.aiCounter -= 2
                                 move = currentGame.maze.cells[currentGame.player.position.x][currentGame.player.position.y + 1]
