@@ -10,6 +10,7 @@ gameNumber = 1
 
 @app.route('/')
 def mode():
+    session['game'] = 0
     return render_template('mode.html')
 
 
@@ -62,9 +63,13 @@ def join():
         session['game'] = int(gameNumber)
         session['player'] = 1
         games[int(gameNumber)].full = True
-    if games[int(gameNumber)] == games[int(session['game'])] and games[int(gameNumber)].begin == True:
-        return redirect(url_for('game'))
-    return render_template('join.html', game=games[session['game']], mode=games[session['game']].mode, size=games[session['game']].maze.size, difficulty=games[session['game']].difficulty)
+    if int(session['game']) != 0 and games[int(gameNumber)] == games[int(session['game'])]:
+        if games[int(gameNumber)].begin == True:
+            return redirect(url_for('game'))
+        else:
+            return render_template('join.html', game=games[session['game']], mode=games[session['game']].mode, size=games[session['game']].maze.size, difficulty=games[session['game']].difficulty)
+    else:
+        return redirect(url_for('mode'))
 
 
 @app.route('/game')
