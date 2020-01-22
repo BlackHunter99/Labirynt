@@ -17,7 +17,7 @@
                 window.location.href = 'game?x={{ game.player.position.x + 1 }}&y={{ game.player.position.y }}';
             }else if (k.keyCode == "37"){
                 window.location.href = 'game?x={{ game.player.position.x }}&y={{ game.player.position.y - 1 }}';
-            }else if (k.keyCode == "9"){
+            }else if (k.keyCode == "32"){
                 window.location.href = '{{ url_for('game', endTurn = 1) }}';
             }else if (k.keyCode == "68"){
                 window.location.href = '{{ url_for('game', action = 'meditate') }}';
@@ -75,7 +75,7 @@
                 <p><b>[A] <a href="{{ url_for('game', item = 'sonar') }}">sonar</a>: {{ game.player.sonar }}</b> (-30 wytrzym)</p>
                 <p><b>[S] <a href="{{ url_for('game', item = 'key') }}">klucz</a>: {{ game.player.key }}</b></p>
                 <p><b>[D] <a href="{{ url_for('game', action = 'meditate') }}">MEDYTACJA</a></b> (+{{ game.player.maxStamina }} wytrzym)</p>
-                <p><b>[TAB] <a href="{{ url_for('game', endTurn = 1) }}">ZAKOŃCZ TURĘ</a></b> (+{{ 4 * game.maze.size }} wytrzymałości)</p>
+                <p><b>[SPACJA] <a href="{{ url_for('game', endTurn = 1) }}">ZAKOŃCZ TURĘ</a></b> (+{{ 4 * game.maze.size }} wytrzymałości)</p>
                 <br>
                 <h2>{{ game.info }}</h2>
                 <h2>{{ game.collectible }}</h2>
