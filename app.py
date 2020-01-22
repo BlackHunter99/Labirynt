@@ -44,7 +44,7 @@ def start():
         session['player'] = 0
         game.full = False
         return redirect(url_for('wait', mode=mode, size=size, difficulty=difficulty))
-    return render_template('start.html', mode=mode, size=size, difficulty=difficulty, game=game)
+    return render_template('start.html', mode=mode, size=size, difficulty=difficulty, aiDifficulty=aiDifficulty, game=game)
 
 
 @app.route('/wait')

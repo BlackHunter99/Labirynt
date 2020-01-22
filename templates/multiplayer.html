@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{{ url_for('mode') }}">Powrót</a><br><br>
-    <h3><a href="{{ url_for('settings', mode='multiplayer') }}">Stwórz grę</a></h3>
-    <h4>Lista gier</h4>
+    <h4><a href="{{ url_for('mode') }}">Powrót</a></h4><br>
+    <h2><a href="{{ url_for('settings', mode='multiplayer') }}">Stwórz grę</a></h2>
+    <h3>Lista gier</h3>
     {% for game in games %}
         {% if games[game].mode == 'multiplayer' and games[game].full == False %}
-            <p>Gra nr {{ game }} <a href="{{ url_for('join', gameNumber=game) }}">Dołącz do gry</a></p>
+            <h4>Gra nr {{ game }} <a href="{{ url_for('join', gameNumber=game) }}">Dołącz do gry</a></h4>
         {% endif %}
     {% endfor %}
 {% endblock %}

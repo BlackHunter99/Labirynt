@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{{ url_for('mode', mode=mode) }}">Powrót</a>
+    <h4><a href="{{ url_for('mode', mode=mode) }}">Powrót</a></h4><br>
     {% if mode == 'hotseat' %}
         <h2>Tryb Hotseat</h2>
     {% elif mode == 'ai' %}
@@ -41,7 +41,7 @@
                 <option value="hard">Trudne</option>
             </select>
         {% endif %}
-        <br><br><br><br>
+        <br><br><br>
         <input type="submit" value="Zatwierdź ustawienia">
     </form>
 {% endblock %}
