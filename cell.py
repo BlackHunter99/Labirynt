@@ -6,7 +6,7 @@ class Cell:
         # ściany: none(white), door(orange), climb(brown), notClimb(black)
         self.walls = {'top': 'climb', 'right': 'climb', 'bottom': 'climb', 'left': 'climb'}
         self.visited = False
-        # zawartość: available(white), visited(gray), hidden(black),
+        # zawartość: available(white), visited(gray), hidden(black), player(green, red, yellow)
         # item(I), key(K), end(Q)
         self.content = 'available'
         self.trap = False
